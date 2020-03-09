@@ -37,6 +37,16 @@ public class FirearmUser : Property
         return true;
     }
 
+    public void RequestStartFire()
+    {
+        currFirearm?.TryStartFire();
+    }
+
+    public void RequestStopFire()
+    {
+        currFirearm?.StopFire();
+    }
+
     #region protected
 
     protected override void InitInternal()

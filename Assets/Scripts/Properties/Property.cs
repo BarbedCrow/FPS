@@ -63,6 +63,11 @@ public class Property : MonoBehaviour
 
     }
 
+    protected virtual void UpdateInternal()
+    {
+
+    }
+
     protected void Log(string msg)
     {
         Debug.Log($"{GetLogCategory()} {msg}");
@@ -83,6 +88,14 @@ public class Property : MonoBehaviour
     #region private
 
     private bool isActive;
+
+    private void Update()
+    {
+        if (IsActive)
+        {
+            UpdateInternal();
+        }
+    }
 
     private string GetLogCategory()
     {
