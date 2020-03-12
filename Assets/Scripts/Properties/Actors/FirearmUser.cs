@@ -5,6 +5,8 @@ using UnityEngine;
 public class FirearmUser : Property
 {
 
+    public Firearm CurrentFirearm { get { return currFirearm; } set { } }
+
     public bool SwapToFirearm(int idx)
     {
         Log($"{owner.Id} swap firearm to {idx}");
@@ -39,12 +41,17 @@ public class FirearmUser : Property
 
     public void RequestStartFire()
     {
-        currFirearm?.TryStartFire();
+        currFirearm?.StartFire();
     }
 
     public void RequestStopFire()
     {
         currFirearm?.StopFire();
+    }
+
+    public void RequestReload()
+    {
+        currFirearm?.StartReload();
     }
 
     #region protected

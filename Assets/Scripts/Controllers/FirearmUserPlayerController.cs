@@ -25,6 +25,9 @@ public class FirearmUserPlayerController : Property
         }else if (CrossPlatformInputManager.GetButtonUp(ActionNames.FIRE))
         {
             firearmUser.RequestStopFire();
+        }else if(CrossPlatformInputManager.GetButtonDown(ActionNames.RELOAD))
+        {
+            firearmUser.RequestReload();
         }
     }
 
