@@ -6,25 +6,35 @@ public class GameMaster : Actor
 {
 
     [SerializeField]
-    private ActorDesc playerDesc;
+    private ActorDesc PlayerDesc;
 
+    public Player Player { get; private set; }
+
+    public static GameMaster GetGameMaster()
+    {
+        return GameObject.FindGameObjectWithTag(Tags.GAME_MASTER).GetComponent<GameMaster>();
+    }
+    
     #region protected
 
     protected override void Start()
     {
         base.Start();
 
-        player = Instantiate(playerDesc.Actor, playerDesc.SpawnPoint) as Player;
-        player.Init(this);
-        player.Activate(this);
+        Player = Instantiate(PlayerDesc.Actor, PlayerDesc.SpawnPoint) as Player;
+        Player.Init(this);
+        Player.Activate(this);
+
+        hudManager = GetComponent<HudManager>();
+        hudManager.Init();
+        hudManager.Enable();
     }
 
     #endregion
 
     #region private
 
-    private Player player;
-
+    private HudManager hudManager;
 
     #endregion
 }

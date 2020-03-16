@@ -1,18 +1,67 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class base_ui_object_controller : MonoBehaviour
+public class BaseUiObjectController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    
+    public bool IsVisible { get; private set; }
+
+    public void Init()
     {
-        
+        InitInternal();
+        View = gameObject.GetComponent<BaseUiObjectView>();
+        View.Init();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Show()
     {
-        
+        IsVisible = true;
+        View.Show();
+        ShowInternal();
     }
+
+    public void Hide()
+    {
+        IsVisible = false;
+        View.Hide();
+        HideInternal();
+    }
+
+    public void UpdateData()
+    {
+        View.UpdateData(CreateData());
+    }
+
+    #region protected
+
+    protected BaseUiObjectView View { get; private set; }
+
+    protected virtual void InitInternal()
+    {
+
+    }
+
+    protected virtual void ShowInternal()
+    {
+
+    }
+
+    protected virtual void HideInternal()
+    {
+
+    }
+
+    protected virtual object[] CreateData()
+    {
+        return new object[0];
+    }
+
+    #endregion
+
+    #region private
+
+    #endregion
+
 }

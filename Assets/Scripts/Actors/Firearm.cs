@@ -98,7 +98,6 @@ public class Firearm : Actor
             isReloading = false; // Maybe there should be some more proper logic, but for this time it's ok
         }
 
-        Log($"shoot, bullets = {currBulletsInClip}"); //Remove this shitty log later
         OnFire.Invoke();
     }
 
@@ -119,7 +118,6 @@ public class Firearm : Actor
             currBulletsCount -= reqToReload;
             currBulletsInClip += reqToReload;
         }
-        Log($"Reload in clip:{currBulletsInClip}, at all:{currBulletsCount}"); //Remove this shitty log later
         if(currBulletsCount == 0 || currBulletsInClip == settings.BulletsInClip)
         {
             isReloading = false;
