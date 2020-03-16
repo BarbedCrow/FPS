@@ -19,7 +19,7 @@ public class UiHudBulletsCounterController : UiHudController
         {
             var bulletsInClip = firearmUser.CurrentFirearm.CurrBulletsInClip.ToString();
             var bulletsCount = firearmUser.CurrentFirearm.CurrBulletsCount.ToString();
-            var text = $"{bulletsInClip} / {bulletsCount}";
+            var text = $"Bullets:{bulletsInClip} / {bulletsCount}";
             data = new object[] { text };
         }
         return data;
