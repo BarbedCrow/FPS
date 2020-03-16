@@ -98,7 +98,28 @@ public class Firearm : Actor
             isReloading = false; // Maybe there should be some more proper logic, but for this time it's ok
         }
 
+        //Hit detection
+
+        var pos = settings.BulletSpawn.position;
+
+        //calculate destination point https://stackoverflow.com/a/50746409/276052
+        var tr = settings.BulletSpawn;
+        var radius = Random.Range(settings.MinBulletGroupRadius, settings.MaxBulletGroupRadius); // TO DO: radius dependency of fire rate
+        var r = radius * Mathf.Sqrt(Random.Range(0, 1f));
+        var theta = Random.Range(0, 1f) * 2 * Mathf.PI;
+        var x = r * Mathf.Cos(theta);
+        var y = r * Mathf.Sin(theta);
+        var endPos = tr.forward * settings.Range + tr.right * x + tr.up * y;
+        Debug.DrawRay(pos, endPos, Color.red, 1);
         OnFire.Invoke();
+    }
+
+    private void OnDrawGizmos() // Debug draw
+    {
+        var pos = settings.BulletSpawn.position;
+        UnityEditor.Handles.color = Color.green;
+        var endPos = pos + settings.BulletSpawn.forward * settings.Range;
+        UnityEditor.Handles.DrawWireDisc(endPos, settings.BulletSpawn.transform.forward, settings.MaxBulletGroupRadius);
     }
 
     private void ReloadLogicUpdate()
@@ -162,6 +183,22 @@ public class FirearmSettings
     [SerializeField]
     private float reloadSpeed;
     public float ReloadSpeed { get { return reloadSpeed; } set { } }
+
+    [SerializeField]
+    private float range;
+    public float Range { get { return range; } set { } }
+
+    [SerializeField]
+    private float minBulletGroupRadius;
+    public float MinBulletGroupRadius { get { return minBulletGroupRadius; } set { } }
+
+    [SerializeField]
+    private float maxBulletGroupRadius;
+    public float MaxBulletGroupRadius { get { return maxBulletGroupRadius; } set { } }
+
+    [SerializeField]
+    private Transform bulletSpawn;
+    public Transform BulletSpawn { get { return bulletSpawn; } set { } }
 }
 
 [SerializeField]
