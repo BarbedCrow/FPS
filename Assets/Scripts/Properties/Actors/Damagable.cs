@@ -35,5 +35,6 @@ public class Damagable : Property
 
 public class DamageInfo
 {
+    public RaycastHit hitInfo;
     public int damage;
 }

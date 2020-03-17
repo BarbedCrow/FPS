@@ -110,10 +110,26 @@ public class Firearm : Actor
         var x = r * Mathf.Cos(theta);
         var y = r * Mathf.Sin(theta);
         var endPos = tr.forward * settings.Range + tr.right * x + tr.up * y;
-        Debug.DrawRay(pos, endPos, Color.red, 1);
-        OnFire.Invoke();
-    }
 
+        //Try to find damagable entity and do damage
+        //For now it works only for one bullet at time guns,
+        //but at the end should work also for multiple bullets at time
+        RaycastHit hitInfo;
+        Physics.Raycast(pos, endPos, out hitInfo, settings.Range);
+        var damagable = hitInfo.transform?.GetComponent<Damagable>();
+        if (damagable != null)
+        {
+            var damageInfo = new DamageInfo();
+            damageInfo.hitInfo = hitInfo;
+            damageInfo.damage = settings.BulletDamage;
+            damagable.DoDamage(damageInfo);
+        }
+
+        OnFire.Invoke();
+
+        Debug.DrawRay(pos, endPos, Color.red, 1);
+    }
+    
     private void OnDrawGizmos() // Debug draw
     {
         var pos = settings.BulletSpawn.position;
