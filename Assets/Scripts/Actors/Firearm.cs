@@ -82,7 +82,7 @@ public class Firearm : Actor
 
         Shoot();
     }
-
+    
     private void Shoot()
     {
         currBulletsInClip -= 1;
@@ -127,6 +127,7 @@ public class Firearm : Actor
 
         OnFire.Invoke();
 
+        var positions = new Vector3[] { pos, endPos };
         Debug.DrawRay(pos, endPos, Color.red, 1);
     }
     

@@ -54,8 +54,8 @@ MonoBehaviour:
     bulletDamage: 1
     reloadSpeed: 0.1
     range: 10
-    minBulletGroupRadius: 1
-    maxBulletGroupRadius: 2.5
+    minBulletGroupRadius: 0.1
+    maxBulletGroupRadius: 1
     bulletSpawn: {fileID: 4817843235073693671}
   OnStartReload:
     m_PersistentCalls:
