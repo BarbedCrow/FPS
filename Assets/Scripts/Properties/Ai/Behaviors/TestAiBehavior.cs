@@ -2,17 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestAiBehavior : MonoBehaviour
+public class TestAiBehavior : AiBehavior
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override void ActivateInternal()
     {
-        
+        base.ActivateInternal();
+
+        visibilitySensor = GetComponent<AiVisibilitySensor>();
+        visibilitySensor.OnPlayerDetected.AddListener(ForceUpdate);
+        visibilitySensor.OnPlayerLost.AddListener(ForceUpdate);
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void DeactivateInternal()
     {
-        
+        visibilitySensor.OnPlayerDetected.RemoveListener(ForceUpdate);
+        visibilitySensor.OnPlayerLost.RemoveListener(ForceUpdate);
+
+        base.DeactivateInternal();
     }
+
+    protected override void UpdateInternal()
+    {
+        if (!IsUpdateRequired) return;
+
+        base.UpdateInternal();
+    }
+
+    private AiVisibilitySensor visibilitySensor;
+
+    
 }

@@ -10,6 +10,7 @@ public class Property : MonoBehaviour
     public void Init(Actor owner)
     {
         this.owner = owner;
+        CfgManager = ConfigManager.GetConfigManager();
         InitInternal();
     }
 
@@ -47,6 +48,7 @@ public class Property : MonoBehaviour
     #region protected
 
     protected Actor owner;
+    protected ConfigManager CfgManager { get; private set; }
 
     protected virtual void InitInternal()
     {

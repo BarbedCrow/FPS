@@ -5,6 +5,8 @@ using UnityEngine;
 public class AiBehavior : Property
 {
 
+    protected bool IsUpdateRequired { get; private set; }
+
     protected override void InitInternal()
     {
         base.InitInternal();
@@ -19,6 +21,18 @@ public class AiBehavior : Property
         {
             action.Init(owner);
         }
+    }
+
+    protected override void UpdateInternal()
+    {
+        base.UpdateInternal();
+
+        IsUpdateRequired = false;
+    }
+
+    protected virtual void ForceUpdate()
+    {
+        IsUpdateRequired = true;
     }
 
     private AiSensor[] sensors;
