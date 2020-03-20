@@ -5,11 +5,19 @@ using UnityEngine;
 public class AiBehavior : Property
 {
 
+    [SerializeField] private float safeDistance;
+
     protected bool IsUpdateRequired { get; private set; }
+
+    protected float SafeDistance { get { return safeDistance; } private set { } }
+
+    protected Player Player { get; private set; }
 
     protected override void InitInternal()
     {
         base.InitInternal();
+
+        Player = GameMaster.GetGameMaster().Player;
 
         sensors = GetComponentsInChildren<AiSensor>();
         actions = GetComponentsInChildren<AiAction>();
@@ -27,7 +35,7 @@ public class AiBehavior : Property
     {
         base.UpdateInternal();
 
-        IsUpdateRequired = false;
+        //IsUpdateRequired = false;
     }
 
     protected virtual void ForceUpdate()
