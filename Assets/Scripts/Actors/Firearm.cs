@@ -43,9 +43,9 @@ public class Firearm : Actor
 
     #region protected
 
-    protected override void Start()
+    protected override void InitInternal()
     {
-        base.Start();
+        base.InitInternal();
 
         currBulletsCount = settings.BulletsMax - settings.BulletsInClip;
         currBulletsInClip = settings.BulletsInClip;

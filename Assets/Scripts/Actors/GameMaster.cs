@@ -17,10 +17,8 @@ public class GameMaster : Actor
     
     #region protected
 
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
-
         Player = Instantiate(PlayerDesc.Actor, PlayerDesc.SpawnPoint) as Player;
         Player.Init(this);
         Player.Activate(this);

@@ -5,9 +5,9 @@ using UnityEngine;
 public class Ai : Actor
 {
 
-    protected override void Start()
+    protected override void InitInternal()
     {
-        base.Start();
+        base.InitInternal();
 
         bhvController = GetComponent<AiBehavior>();
         bhvController.Init(this);

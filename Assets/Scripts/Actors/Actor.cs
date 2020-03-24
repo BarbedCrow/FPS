@@ -8,6 +8,7 @@ public class Actor : MonoBehaviour
     public void Init(Actor owner)
     {
         this.owner = owner;
+        InitInternal();
     }
 
     public bool IsActive
@@ -58,7 +59,7 @@ public class Actor : MonoBehaviour
     protected Property[] properties;
     protected Actor owner;
 
-    protected virtual void Start()
+    protected virtual void InitInternal()
     {
         properties = GetComponents<Property>();
         foreach (Property property in properties)

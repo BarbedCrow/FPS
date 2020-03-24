@@ -7,9 +7,13 @@ public class Player : Actor
 
     #region protected
 
-    protected override void Start()
+    protected override void InitInternal()
     {
-        base.Start();
+        base.InitInternal();
+
+        cam = GameObject.FindGameObjectWithTag(Tags.MAIN_CAMERA).GetComponent<GameCamera>();
+        cam.Init(this);
+        cam.Activate(this);
     }
 
     protected override void Update()
@@ -18,4 +22,6 @@ public class Player : Actor
     }
 
     #endregion
+
+    private GameCamera cam;
 }
