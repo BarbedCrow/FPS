@@ -58,9 +58,29 @@ public class BaseUiObjectController : MonoBehaviour
         return new object[0];
     }
 
+    protected void Log(string msg)
+    {
+        Debug.Log($"{GetLogCategory()} {msg}");
+    }
+
+    protected void LogWarning(string msg)
+    {
+        Debug.LogWarning($"{GetLogCategory()} {msg}");
+    }
+
+    protected void LogError(string msg)
+    {
+        Debug.LogError($"{GetLogCategory()} {msg}");
+    }
+
     #endregion
 
     #region private
+
+    private string GetLogCategory()
+    {
+        return $"UiControllers/{GetType()}:";
+    }
 
     #endregion
 

@@ -36,5 +36,25 @@ public class BaseUiObjectView : MonoBehaviour
 
     }
 
+    protected void Log(string msg)
+    {
+        Debug.Log($"{GetLogCategory()} {msg}");
+    }
+
+    protected void LogWarning(string msg)
+    {
+        Debug.LogWarning($"{GetLogCategory()} {msg}");
+    }
+
+    protected void LogError(string msg)
+    {
+        Debug.LogError($"{GetLogCategory()} {msg}");
+    }
+
     #endregion
+
+    private string GetLogCategory()
+    {
+        return $"UiViews/{GetType()}:";
+    }
 }
