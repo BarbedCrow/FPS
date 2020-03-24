@@ -29,12 +29,14 @@ public class Damagable : Property
     private void Die()
     {
         OnDie.Invoke();
+        Destroy(gameObject);
     }
 
 }
 
 public class DamageInfo
 {
-    public RaycastHit hitInfo;
+    public Vector3 hitPoint;
+    public Actor damager;
     public int damage;
 }

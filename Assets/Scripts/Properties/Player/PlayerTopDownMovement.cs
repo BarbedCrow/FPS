@@ -24,7 +24,7 @@ public class PlayerTopDownMovement : Property
     {
         base.UpdateInternal();
 
-        body.velocity = Vector3.zero; // to prevent physical influence
+        body.velocity = new Vector3(0, body.velocity.y, 0); // to prevent physical influence
         UpdateMovement();
         UpdateRotation();
     }
@@ -44,16 +44,8 @@ public class PlayerTopDownMovement : Property
     {
         var ray = playerCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (!Physics.Raycast(ray, out hit))
-        {
-            return;
-        }
-        var dir = hit.point - transform.position;
-        var angle = Vector3.Angle(transform.forward, dir);
-        if (angle < 0.1) return;
-        transform.Rotate(transform.up, angle);
-        Log($"angle:{angle}");
-        Debug.DrawRay(transform.position, transform.forward, Color.red);
+        if (!Physics.Raycast(ray, out hit)) return;
+        transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));
     }
 
     private void OnDrawGizmos() // Debug draw
