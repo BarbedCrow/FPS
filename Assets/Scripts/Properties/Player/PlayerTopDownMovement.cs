@@ -10,6 +10,7 @@ public class PlayerTopDownMovement : Property
 
     public float Speed { get; private set; }
     public float IsMoving { get; private set; }
+    public Vector3 Direction { get; private set; }
 
     protected override void InitInternal()
     {
@@ -36,7 +37,10 @@ public class PlayerTopDownMovement : Property
     {
         float moveX = Input.GetAxis(ActionNames.VERTICAL_MOVE);
         float moveZ = Input.GetAxis(ActionNames.HORIZONTAL_MOVE);
-        var velocity = (Vector3.forward * moveX + Vector3.right * moveZ) * Speed * Time.deltaTime;
+        Direction = (transform.forward * moveX + transform.right * moveZ);
+        var velocity = (Vector3.forward * moveX + Vector3.right * moveZ) * Speed;
+        // Clamp is used to prevent getting higher velocity when character moves diagonally
+        velocity = Vector3.ClampMagnitude(velocity, Speed * Time.deltaTime);
         body.MovePosition(body.position + velocity);
     }
 
@@ -52,7 +56,7 @@ public class PlayerTopDownMovement : Property
     {
         var ray = playerCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if(!Physics.Raycast(ray, out hit))
+        if(!Physics.Raycast(ray, out hit, (int)PhysicLayers.FLOOR))
         {
             return;
         }
