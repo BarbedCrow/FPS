@@ -175,6 +175,7 @@ GameObject:
   - component: {fileID: 6711120691881100660}
   - component: {fileID: 2249267846694390291}
   - component: {fileID: -9188920769617719838}
+  - component: {fileID: 1581296601787475554}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -265,6 +266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 3
   runSpeed: 8
+  runStaminaCost: 2
 --- !u!54 &2249267846694390291
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -294,6 +296,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDiff: 0.2
+--- !u!114 &1581296601787475554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4886691394563424555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ee4565fe40c2f345a6d3b8cb352e385, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicMaxVal: 100
+  basicRecoverySpeed: 1
+  recoveryDelay: 2
 --- !u!136 &4967482476742566523
 CapsuleCollider:
   m_ObjectHideFlags: 0
