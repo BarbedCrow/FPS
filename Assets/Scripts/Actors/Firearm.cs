@@ -18,16 +18,6 @@ public class Firearm : Weapon
     public int CurrBulletsCount { get { return currBulletsCount; } set { } }
     public int CurrBulletsInClip { get { return currBulletsInClip; } set { } }
 
-    public override void StopAttack()
-    {
-        firstShotWasDone = false;
-        if (IsAttacking)
-        {
-            OnStopFire.Invoke();
-        }
-        base.StopAttack();
-    }
-
     public override void StartReload()
     {
         if (currBulletsCount == 0 || currBulletsInClip == settings.BulletsInClip) return;
@@ -43,6 +33,7 @@ public class Firearm : Weapon
         base.InitInternal();
 
         Type = settings.Type;
+        CanBeStoppedByPlayer = settings.CanBeStoppedByPlayer;
 
         currBulletsCount = settings.BulletsMax - settings.BulletsInClip;
         currBulletsInClip = settings.BulletsInClip;
@@ -50,6 +41,16 @@ public class Firearm : Weapon
         shootLogic = GetComponent<ShootLogic>();
         var groupRadius = new Vector2(settings.MinBulletGroupRadius, settings.MaxBulletGroupRadius);
         shootLogic.SetInitialParams(settings.BulletSpawns, groupRadius, settings.Range, settings.BulletSpeed, settings.BulletDamage, owner);
+    }
+
+    protected override void StopAttack()
+    {
+        firstShotWasDone = false;
+        if (IsAttacking)
+        {
+            OnStopFire.Invoke();
+        }
+        base.StopAttack();
     }
 
     protected override void Update()

@@ -22,7 +22,6 @@ public class PlayerAnimController : Property
         if(currWeaponType != weaponUser.CurrentWeapon.Type)
         {
             currWeaponType = weaponUser.CurrentWeapon.Type;
-            Log($"Weapon type{currWeaponType}");
             animator.SetInteger(WEAPON_TYPE, (int)weaponUser.CurrentWeapon.Type); // change weapon type animations
         }
 
@@ -45,10 +44,15 @@ public class PlayerAnimController : Property
         {
             dir.z = vert + maxDiff;
         }
+
         animator.SetFloat(HORIZONTAL, dir.x);
         animator.SetFloat(VERTICAL, dir.z);
+
+        //attack animations
+        animator.SetBool(IS_ATTACKING, weaponUser.CurrentWeapon.IsAttacking);
     }
 
+    private const string IS_ATTACKING = "IsAttacking";
     private const string WEAPON_TYPE = "WeaponType";
     private const string HORIZONTAL = "HorizontalMove";
     private const string VERTICAL = "VerticalMove";

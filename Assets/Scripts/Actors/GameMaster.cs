@@ -26,6 +26,13 @@ public class GameMaster : Actor
         hudManager = GetComponent<HudManager>();
         hudManager.Init();
         hudManager.Enable();
+
+        //Debug AI activation
+        foreach (var ai in GameObject.FindGameObjectsWithTag(Tags.AI))
+        {
+            ai.GetComponent<Ai>().Init(this);
+            ai.GetComponent<Ai>().Activate(this);
+        }
     }
 
     #endregion

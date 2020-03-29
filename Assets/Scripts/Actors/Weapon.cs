@@ -5,16 +5,24 @@ using UnityEngine;
 public class Weapon : Actor
 {
 
-    public virtual WeaponType Type { get; protected set; }
+    public WeaponType Type { get; protected set; }
+    public bool CanBeStoppedByPlayer { get; protected set; }
+    public bool IsAttacking { get; private set; }
 
-    public virtual void StartAttack()
+    public virtual void RequestStartAttack()
     {
-        IsAttacking = true;
+        if (!IsAttacking)
+        {
+            StartAttack();
+        }
     }
 
-    public virtual void StopAttack()
+    public virtual void RequestStopAttack()
     {
-        IsAttacking = false;
+        if (CanBeStoppedByPlayer)
+        {
+            StopAttack();
+        }
     }
 
     public virtual void StartReload()
@@ -22,7 +30,15 @@ public class Weapon : Actor
         // Abstract
     }
 
-    protected bool IsAttacking { get; private set; }
+    protected virtual void StartAttack()
+    {
+        IsAttacking = true;
+    }
+    
+    protected virtual void StopAttack()
+    {
+        IsAttacking = false;
+    }
 
 }
 
@@ -32,6 +48,10 @@ public class WeaponSettings
     [SerializeField]
     private WeaponType type;
     public WeaponType Type { get { return type; } set { } }
+
+    [SerializeField]
+    private bool canBeStoppedByPlayer;
+    public bool CanBeStoppedByPlayer { get { return canBeStoppedByPlayer; } set { } }
 }
 
 public enum WeaponType

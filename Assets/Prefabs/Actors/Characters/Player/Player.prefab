@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings:
     type: 0
+    canBeStoppedByPlayer: 1
     timeBetweenShots: 0.1
     shootType: 0
     bulletsInClip: 100000
@@ -434,6 +435,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings:
     type: 1
+    canBeStoppedByPlayer: 0
+    attackTime: 1.5
+    damage: 50
 --- !u!1001 &4393363659590691734
 PrefabInstance:
   m_ObjectHideFlags: 0

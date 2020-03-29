@@ -19,6 +19,7 @@ public class PlayerTopDownMovement : Property
         base.InitInternal();
 
         playerCamera = GameObject.FindGameObjectWithTag(Tags.MAIN_CAMERA).GetComponent<Camera>();
+        weaponUser = GetComponent<WeaponUser>();
         body = GetComponentInChildren<Rigidbody>();
         Speed = walkSpeed;
         stamina = GetComponent<Stamina>();
@@ -29,12 +30,17 @@ public class PlayerTopDownMovement : Property
         base.UpdateInternal();
 
         body.velocity = new Vector3(0, body.velocity.y, 0); // to prevent physical influence
+
+        var melee = weaponUser.CurrentWeapon as MeleeWeapon;
+        if (melee != null && melee.IsAttacking) return; // Don't move when attack is going on
+
         UpdateMovement();
         UpdateRotation();
         UpdateSprint();
     }
 
     private Rigidbody body;
+    private WeaponUser weaponUser;
     private Camera playerCamera;
     private Stamina stamina;
     private bool isSprinting;

@@ -31,7 +31,7 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        var damagable = other.gameObject.GetComponent<Damagable>();
+        var damagable = other.gameObject.GetComponentInParent<Damagable>();
         if (damagable != null)
         {
             var damageInfo = new DamageInfo();

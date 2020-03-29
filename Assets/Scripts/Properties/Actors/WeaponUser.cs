@@ -42,12 +42,12 @@ public class WeaponUser : Property
 
     public void RequestStartFire()
     {
-        CurrentWeapon?.StartAttack();
+        CurrentWeapon?.RequestStartAttack();
     }
 
     public void RequestStopFire()
     {
-        CurrentWeapon?.StopAttack();
+        CurrentWeapon?.RequestStopAttack();
     }
 
     public void RequestReload()

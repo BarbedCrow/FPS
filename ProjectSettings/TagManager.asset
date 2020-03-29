@@ -9,6 +9,7 @@ TagManager:
   - GameMaster
   - Fire
   - ConfigManager
+  - AI
   layers:
   - Default
   - TransparentFX

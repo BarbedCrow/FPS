@@ -8,7 +8,7 @@ public class UiHealthBarController : UiHudController
     {
         base.InitInternal();
 
-        damagable = gameMaster.Player.GetComponent<Damagable>();
+        damagable = gameMaster.Player.GetComponentInParent<Damagable>();
     }
 
     protected override object[] CreateData()

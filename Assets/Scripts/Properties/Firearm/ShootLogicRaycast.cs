@@ -23,7 +23,7 @@ public class ShootLogicRaycast : ShootLogic
         //but at the end should work also for multiple bullets at time
         RaycastHit hitInfo;
         Physics.Raycast(pos, endPos, out hitInfo, range);
-        var damagable = hitInfo.transform?.GetComponent<Damagable>();
+        var damagable = hitInfo.transform?.GetComponentInParent<Damagable>();
         if (damagable != null)
         {
             var damageInfo = new DamageInfo();
