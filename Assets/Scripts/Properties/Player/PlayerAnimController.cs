@@ -13,12 +13,20 @@ public class PlayerAnimController : Property
 
         propMovement = GetComponent<PlayerTopDownMovement>();
         animator = GetComponentInChildren<Animator>();
+        weaponUser = GetComponent<WeaponUser>();
     }
 
     protected override void UpdateInternal()
     {
         base.UpdateInternal();
+        if(currWeaponType != weaponUser.CurrentWeapon.Type)
+        {
+            currWeaponType = weaponUser.CurrentWeapon.Type;
+            Log($"Weapon type{currWeaponType}");
+            animator.SetInteger(WEAPON_TYPE, (int)weaponUser.CurrentWeapon.Type); // change weapon type animations
+        }
 
+        //movement animations
         var dir = propMovement.Direction;
         var hor = animator.GetFloat(HORIZONTAL);
         var vert = animator.GetFloat(VERTICAL);
@@ -41,10 +49,13 @@ public class PlayerAnimController : Property
         animator.SetFloat(VERTICAL, dir.z);
     }
 
+    private const string WEAPON_TYPE = "WeaponType";
     private const string HORIZONTAL = "HorizontalMove";
     private const string VERTICAL = "VerticalMove";
 
     private PlayerTopDownMovement propMovement;
+    private WeaponUser weaponUser;
     private Animator animator;
+    private WeaponType currWeaponType;
 
 }

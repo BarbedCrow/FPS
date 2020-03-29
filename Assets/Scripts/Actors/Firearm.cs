@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Firearm : Actor
+public class Firearm : Weapon
 {
 
     [SerializeField] private FirearmSettings settings;
@@ -18,22 +18,17 @@ public class Firearm : Actor
     public int CurrBulletsCount { get { return currBulletsCount; } set { } }
     public int CurrBulletsInClip { get { return currBulletsInClip; } set { } }
 
-    public void StartFire()
+    public override void StopAttack()
     {
-        isFiring = true;
-    }
-
-    public void StopFire()
-    {
-        if (isFiring)
+        firstShotWasDone = false;
+        if (IsAttacking)
         {
             OnStopFire.Invoke();
         }
-        isFiring = false;
-        firstShotWasDone = false;
+        base.StopAttack();
     }
 
-    public void StartReload()
+    public override void StartReload()
     {
         if (currBulletsCount == 0 || currBulletsInClip == settings.BulletsInClip) return;
         isReloading = true;
@@ -46,6 +41,8 @@ public class Firearm : Actor
     protected override void InitInternal()
     {
         base.InitInternal();
+
+        Type = settings.Type;
 
         currBulletsCount = settings.BulletsMax - settings.BulletsInClip;
         currBulletsInClip = settings.BulletsInClip;
@@ -68,7 +65,6 @@ public class Firearm : Actor
     #region private
 
     private bool isReloading = false;
-    private bool isFiring = false;
     private bool firstShotWasDone = false;
 
     private float timeForNextShot = -1;
@@ -81,9 +77,9 @@ public class Firearm : Actor
 
     private void ShootLogicUpdate()
     {
-        if (!isFiring) return;
+        if (!IsAttacking) return;
         if (Time.time < timeForNextShot) return;
-        if (settings.Type != FirearmType.AUTO && firstShotWasDone) return;
+        if (settings.ShootType != ShootType.AUTO && firstShotWasDone) return;
         if (currBulletsInClip <= 0) return;
 
         Shoot();
@@ -141,15 +137,15 @@ public class Firearm : Actor
 }
 
 [System.Serializable]
-public class FirearmSettings
+public class FirearmSettings : WeaponSettings
 {
     [SerializeField]
     private float timeBetweenShots;
     public float TimeBetweenShots { get { return timeBetweenShots; } set { } }
 
     [SerializeField]
-    private FirearmType type;
-    public FirearmType Type { get { return type; } set { } }
+    private ShootType shootType;
+    public ShootType ShootType { get { return shootType; } set { } }
 
     [SerializeField]
     private int bulletsInClip;
@@ -193,7 +189,7 @@ public class FirearmSettings
 }
 
 [SerializeField]
-public enum FirearmType
+public enum ShootType
 {
     SINGLE,
     AUTO,

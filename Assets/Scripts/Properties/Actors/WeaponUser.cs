@@ -2,56 +2,57 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FirearmUser : Property
+public class WeaponUser : Property
 {
 
-    public Firearm CurrentFirearm { get { return currFirearm; } set { } }
+    public Weapon CurrentWeapon { get; private set; }
 
     public bool SwapToFirearm(int idx)
     {
         Log($"{owner.Id} swap firearm to {idx}");
-        if(idx == currFirearmIdx)
+        if(idx == currWeaponIdx)
         {
-            if (currFirearm.IsActive)
+            if (CurrentWeapon.IsActive)
             {
                 Log("Trying to swap to the same firearm");
             }
             else
             {
                 Log("current firearm was reactivated");
-                currFirearm.Activate(owner);
+                CurrentWeapon.Activate(owner);
             }
+            return false;
         }
-        currFirearm?.Deactivate(owner);
-        if (firearms.Length == 0)
+        CurrentWeapon?.Deactivate(owner);
+        if (weapons.Length == 0)
         {
             LogWarning($"list is empty");
             return false;
         }
-        if (idx >= firearms.Length)
+        if (idx >= weapons.Length)
         {
-            LogWarning($"idx of new firearm is bigger than firearms count({firearms.Length})");
+            LogWarning($"idx of new firearm is bigger than weapons count({weapons.Length})");
             return false;
         }
 
-        currFirearm = firearms[idx];
-        currFirearm.Activate(owner);
+        CurrentWeapon = weapons[idx];
+        CurrentWeapon.Activate(owner);
         return true;
     }
 
     public void RequestStartFire()
     {
-        currFirearm?.StartFire();
+        CurrentWeapon?.StartAttack();
     }
 
     public void RequestStopFire()
     {
-        currFirearm?.StopFire();
+        CurrentWeapon?.StopAttack();
     }
 
     public void RequestReload()
     {
-        currFirearm?.StartReload();
+        CurrentWeapon?.StartReload();
     }
 
     #region protected
@@ -60,11 +61,11 @@ public class FirearmUser : Property
     {
         base.InitInternal();
 
-        firearms = gameObject.GetComponentsInChildren<Firearm>();
+        weapons = gameObject.GetComponentsInChildren<Weapon>();
         
-        foreach(Firearm firearm in firearms)
+        foreach(Weapon weapon in weapons)
         {
-            firearm.Init(owner);
+            weapon.Init(owner);
         }
     }
 
@@ -72,7 +73,7 @@ public class FirearmUser : Property
     {
         base.ActivateInternal();
 
-        if(currFirearm == null)
+        if(CurrentWeapon == null)
         {
             SwapToFirearm(DEFAULT_FIREARM_IDX);
         }
@@ -84,10 +85,9 @@ public class FirearmUser : Property
 
     private const int DEFAULT_FIREARM_IDX = 0;
 
-    private Firearm[] firearms;
-    private Firearm currFirearm;
+    private Weapon[] weapons;
 
-    private int currFirearmIdx = -1;
+    private int currWeaponIdx = -1;
 
     #endregion
 

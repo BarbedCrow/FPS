@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FirearmUserAiController : Property
+public class WeaponUserAiController : Property
 {
     
 }

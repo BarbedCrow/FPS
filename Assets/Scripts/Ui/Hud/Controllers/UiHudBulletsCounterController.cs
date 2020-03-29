@@ -9,25 +9,29 @@ public class UiHudBulletsCounterController : UiHudController
     {
         base.InitInternal();
 
-        firearmUser = gameMaster.Player.GetComponent<FirearmUser>();
+        weaponUser = gameMaster.Player.GetComponent<WeaponUser>();
     }
 
     protected override object[] CreateData()
     {
         var data = base.CreateData();
-        if (firearmUser.CurrentFirearm != null)
+        var firearm = weaponUser.CurrentWeapon as Firearm;
+        if (firearm != null)
         {
-            var bulletsInClip = firearmUser.CurrentFirearm.CurrBulletsInClip.ToString();
-            var bulletsCount = firearmUser.CurrentFirearm.CurrBulletsCount.ToString();
+            var bulletsInClip = firearm.CurrBulletsInClip.ToString();
+            var bulletsCount = firearm.CurrBulletsCount.ToString();
             var text = $"Bullets:{bulletsInClip} / {bulletsCount}";
             data = new object[] { text };
+        }else
+        {
+            data = new object[] { "Melee weapon" };
         }
         return data;
     }
 
     #region private
 
-    private FirearmUser firearmUser;
+    private WeaponUser weaponUser;
 
     private void Update()
     {

@@ -9,6 +9,7 @@ public class Actor : MonoBehaviour
     {
         this.owner = owner;
         InitInternal();
+        gameObject.SetActive(false);
     }
 
     public bool IsActive
@@ -30,6 +31,7 @@ public class Actor : MonoBehaviour
             return;
         }
 
+        gameObject.SetActive(true);
         isActive = true;
         ActivateInternal();
     }
@@ -48,6 +50,7 @@ public class Actor : MonoBehaviour
             return;
         }
 
+        gameObject.SetActive(false);
         isActive = false;
         DeactivateInternal();
     }
