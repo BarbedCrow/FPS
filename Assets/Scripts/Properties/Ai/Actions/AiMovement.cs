@@ -12,17 +12,17 @@ public class AiMovement : AiAction
 
     protected override bool TryToExecuteInternal()
     {
-        if (!visibilitySensor.IsPlayerVisible) return false;
-        var dist = Vector3.Distance(transform.position, player.transform.position);
-        if (dist > SafeDistance)
+        var isMoving = !navAgent.velocity.Equals(Vector3.zero);
+        if (visibilitySensor.IsPlayerVisible && !isMoving)
         {
             Move(player.transform.position);
             return true;
-        }else
+        }else if(!visibilitySensor.IsPlayerVisible && !navAgent.isStopped)
         {
             Stop();
             return false;
         }
+        return isMoving;
     }
 
     public void Move(Vector3 pos)
