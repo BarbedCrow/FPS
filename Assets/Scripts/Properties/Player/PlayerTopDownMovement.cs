@@ -80,7 +80,6 @@ public class PlayerTopDownMovement : Property
         float moveX = Input.GetAxis(ActionNames.VERTICAL_MOVE);
         float moveZ = Input.GetAxis(ActionNames.HORIZONTAL_MOVE);
         Direction = (transform.forward * moveX + transform.right * moveZ);
-        //Log($"Direction{Direction}");
         var velocity = (Vector3.forward * moveX + Vector3.right * moveZ) * Speed;
         // Clamp is used to prevent getting higher velocity when character moves diagonally
         velocity = Vector3.ClampMagnitude(velocity, Speed * Time.deltaTime);
